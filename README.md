@@ -1,1 +1,3 @@
-# js-library
+# JS Library
+
+*Work in progress.*
