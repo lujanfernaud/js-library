@@ -3,40 +3,21 @@ const STATUS_INDEX = 2
 class App {
   constructor() {
     this.library = new Library()
-    this.inputTitle = document.getElementById('form-input-title')
-    this.inputAuthor = document.getElementById('form-input-author')
-    this.select = document.getElementById('form-select')
-    this.submitButton = document.getElementById('submit')
+    this.bookAppender = new BookAppender(this)
+    this.form = new Form(this)
   }
 
   start() {
     this.populateTable()
-    this.watchSubmitButton()
+    this.form.watchSubmitButton()
   }
 
   populateTable() {
     const books = new Seeds().books
 
     books.forEach(book => {
-      new BookAppender(book, this).call()
+      this.bookAppender.call(book)
     })
-  }
-
-  watchSubmitButton() {
-    this.submitButton.addEventListener('click', (event) => {
-      event.preventDefault()
-
-      this.submitBook()
-    })
-  }
-
-  submitBook() {
-    const title = this.inputTitle.value
-    const author = this.inputAuthor.value
-    const status = this.select.value
-    const book = new Book(title, author, status)
-
-    return new BookAppender(book, this).call()
   }
 
   deleteBook(event) {
@@ -50,6 +31,7 @@ class App {
 class Seeds {
   constructor() {
     this.books = [
+      { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' },
       { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' }
     ]
   }
@@ -61,26 +43,16 @@ class Library {
   }
 }
 
-class Book {
-  constructor(title, author, status) {
-    this.title = title
-    this.author = author
-    this.status = status
-  }
-}
-
 class BookAppender {
-  constructor(book, app) {
-    this.book = book
+  constructor(app) {
     this.app = app
     this.libraryBooks = app.library.books
-    this.tableBody = document.getElementById('table-body')
-    this.tr = document.createElement('tr')
-    this.tableBody.appendChild(this.tr)
   }
 
-  call() {
-    Object.values(this.book).forEach((value, index) => {
+  call(book) {
+    this.createNewRow()
+
+    Object.values(book).forEach((value, index) => {
       if (index !== STATUS_INDEX) {
         this.addCell(value)
       } else {
@@ -90,7 +62,13 @@ class BookAppender {
 
     this.addButton('Delete', { id: 'delete' })
 
-    return this.libraryBooks.push(this.book)
+    return this.libraryBooks.push(book)
+  }
+
+  createNewRow() {
+    this.tableBody = document.getElementById('table-body')
+    this.tr = document.createElement('tr')
+    this.tableBody.appendChild(this.tr)
   }
 
   addCell(value) {
@@ -114,6 +92,38 @@ class BookAppender {
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
+  }
+}
+
+class Form {
+  constructor(app) {
+    this.app = app
+    this.title = document.getElementById('form-input-title').value
+    this.author = document.getElementById('form-input-author').value
+    this.status = document.getElementById('form-select').value
+    this.submitButton = document.getElementById('submit')
+  }
+
+  watchSubmitButton() {
+    this.submitButton.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      this.submitBook()
+    })
+  }
+
+  submitBook() {
+    const book = new Book(this.title, this.author, this.status)
+
+    return this.app.bookAppender.call(book)
+  }
+}
+
+class Book {
+  constructor(title, author, status) {
+    this.title = title
+    this.author = author
+    this.status = status
   }
 }
 
