@@ -8,9 +8,65 @@
 </head>
 <body>
 
-  <main class="container">
-    
-  </main>
+  <div class="container">
 
+    <header class="header">
+      <h1 class="header__h1">Readings</h1>
+    </header>
+
+    <main>
+      <div class="row">
+        <table class="table">
+          <thead class="table__header">
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="table__body">
+            <tr>
+              <td>Night Watch</td>
+              <td>Terry Pratchett</td>
+              <td><button>Not read</button></td>
+              <td><button>Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <form action="" class="form">
+          <div class="form__group">
+            <label for="title" class="form__group-label">Title</label>
+            <input type="text" name="title" class="form__group-input">
+          </div>
+
+          <div class="form__group">
+            <label for="author" class="form__group-label">Author</label>
+            <input type="text" name="author" class="form__group-input">
+          </div>
+
+          <div class="form__group">
+            <label for="status" class="form__group-label">Status</label>
+            <select name="status" id="" class="form__group-select">
+              <option value="read">Read</option>
+              <option value="not-read">Not read</option>
+            </select>
+          </div>
+
+          <div class="form__group">
+            <button type="submit" class="form__group-button">
+              Add book
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

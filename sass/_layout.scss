@@ -1,3 +1,93 @@
 //
 // Layout
 //
+
+
+// Header
+
+
+.header__h1 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+// Main
+
+
+.row {
+  @include flex-center;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &__header {
+    height: 3rem;
+    border-bottom: 1px solid;
+
+    th {
+      text-align: left;
+      padding-left: $table-cell-padding;
+    }
+  }
+
+  &__body {
+    tr {
+      border-bottom: 1px solid;
+    }
+
+    td {
+      padding: $table-cell-padding;
+
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        width: 15%;
+      }
+
+      &:nth-of-type(3) {
+        padding-right: 0;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.form {
+  @include flex-center;
+  flex-direction: column;
+  flex-basis: 50%;
+  margin-top: 2rem;
+
+  &__group {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: .75rem;
+    }
+
+    &-label {
+      margin-bottom: .25rem;
+    }
+
+    &-input,
+    &-select,
+    &-button {
+      padding: .25rem;
+    }
+
+    &-button {
+      margin-top: .75rem;
+    }
+  }
+}
