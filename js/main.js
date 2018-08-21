@@ -23,8 +23,8 @@ class App {
   }
 
   watchSubmitButton() {
-    this.submitButton.addEventListener('click', (element) => {
-      element.preventDefault()
+    this.submitButton.addEventListener('click', (event) => {
+      event.preventDefault()
 
       this.submitBook()
     })
@@ -37,6 +37,13 @@ class App {
     const book = new Book(title, author, status)
 
     return new BookAppender(book, this).call()
+  }
+
+  deleteBook(event) {
+    const row = event.target.parentNode.parentNode
+    const tbody = row.parentNode
+
+    return tbody.removeChild(row)
   }
 }
 
@@ -81,7 +88,7 @@ class BookAppender {
       }
     })
 
-    this.addButton('Delete')
+    this.addButton('Delete', { id: 'delete' })
 
     return this.libraryBooks.push(this.book)
   }
@@ -94,10 +101,15 @@ class BookAppender {
     this.tr.appendChild(td)
   }
 
-  addButton(value) {
+  addButton(value, { id = '' } = {}) {
     const text = document.createTextNode(value)
     const td = document.createElement('td')
     const button = document.createElement('button')
+    button.id = id
+
+    if (id === 'delete') {
+      button.onclick = this.app.deleteBook
+    }
 
     button.appendChild(text)
     td.appendChild(button)
