@@ -10,7 +10,16 @@ class App {
   }
 
   start() {
+    this.populateTable()
     this.watchSubmitButton()
+  }
+
+  populateTable() {
+    const books = new Seeds().books
+
+    books.forEach(book => {
+      new BookAppender(book, this).call()
+    })
   }
 
   watchSubmitButton() {
@@ -27,7 +36,15 @@ class App {
     const status = this.select.value
     const book = new Book(title, author, status)
 
-    return new BookAppender(book, this.library.books).call()
+    return new BookAppender(book, this).call()
+  }
+}
+
+class Seeds {
+  constructor() {
+    this.books = [
+      { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' }
+    ]
   }
 }
 
@@ -46,9 +63,10 @@ class Book {
 }
 
 class BookAppender {
-  constructor(book, libraryBooks) {
+  constructor(book, app) {
     this.book = book
-    this.libraryBooks = libraryBooks
+    this.app = app
+    this.libraryBooks = app.library.books
     this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
     this.tableBody.appendChild(this.tr)
