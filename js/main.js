@@ -132,4 +132,4 @@ class BookManager {
   }
 }
 
-const app = new App().start()
+new App().start()
