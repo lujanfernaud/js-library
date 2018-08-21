@@ -5,19 +5,12 @@ class App {
     this.library = new Library()
     this.seeder = new Seeder(this)
     this.form = new Form(this)
-    this.bookAppender = new BookAppender(this)
+    this.bookManager = new BookManager(this)
   }
 
   start() {
     this.seeder.populateTable()
     this.form.watchSubmitButton()
-  }
-
-  deleteBook(event) {
-    const row = event.target.parentNode.parentNode
-    const tbody = row.parentNode
-
-    return tbody.removeChild(row)
   }
 }
 
@@ -32,7 +25,7 @@ class Seeder {
 
   populateTable() {
     this.books.forEach(book => {
-      this.app.bookAppender.call(book)
+      this.app.bookManager.add(book)
     })
   }
 }
@@ -63,7 +56,7 @@ class Form {
   submitBook() {
     const book = new Book(this.title, this.author, this.status)
 
-    return this.app.bookAppender.call(book)
+    return this.app.bookManager.add(book)
   }
 }
 
@@ -75,13 +68,13 @@ class Book {
   }
 }
 
-class BookAppender {
+class BookManager {
   constructor(app) {
     this.app = app
     this.libraryBooks = app.library.books
   }
 
-  call(book) {
+  add(book) {
     this.createNewRow()
 
     Object.values(book).forEach((value, index) => {
@@ -118,12 +111,19 @@ class BookAppender {
     button.id = id
 
     if (id === 'delete') {
-      button.onclick = this.app.deleteBook
+      button.onclick = this.removeBook
     }
 
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
+  }
+
+  removeBook(event) {
+    const row = event.target.parentNode.parentNode
+    const tbody = row.parentNode
+
+    return tbody.removeChild(row)
   }
 }
 
