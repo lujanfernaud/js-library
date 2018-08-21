@@ -39,9 +39,6 @@ class Library {
 class Form {
   constructor(app) {
     this.app = app
-    this.title = document.getElementById('form-input-title').value
-    this.author = document.getElementById('form-input-author').value
-    this.status = document.getElementById('form-select').value
     this.submitButton = document.getElementById('submit')
   }
 
@@ -54,7 +51,12 @@ class Form {
   }
 
   submitBook() {
-    const book = new Book(this.title, this.author, this.status)
+    const title = document.getElementById('form-input-title').value
+    const author = document.getElementById('form-input-author').value
+    const options = document.getElementById('form-select').options
+    const status = options[options.selectedIndex].text
+
+    const book = new Book(title, author, status)
 
     return this.app.bookManager.add(book)
   }
