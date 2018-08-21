@@ -1,4 +1,4 @@
-const STATUS_INDEX = 2
+const BOOK_STATUS_INDEX = 2
 
 class App {
   constructor() {
@@ -76,16 +76,7 @@ class BookManager {
 
   add(book) {
     this.createNewRow()
-
-    Object.values(book).forEach((value, index) => {
-      if (index !== STATUS_INDEX) {
-        this.addCell(value)
-      } else {
-        this.addButton(value)
-      }
-    })
-
-    this.addButton('Delete', { id: 'delete' })
+    this.addInformationToRow(book)
 
     return this.libraryBooks.push(book)
   }
@@ -94,6 +85,18 @@ class BookManager {
     this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
     this.tableBody.appendChild(this.tr)
+  }
+
+  addInformationToRow(book) {
+    Object.values(book).forEach((value, index) => {
+      if (index !== BOOK_STATUS_INDEX) {
+        this.addCell(value)
+      } else {
+        this.addButton(value)
+      }
+    })
+
+    this.addButton('Delete', { id: 'delete' })
   }
 
   addCell(value) {
