@@ -3,21 +3,14 @@ const STATUS_INDEX = 2
 class App {
   constructor() {
     this.library = new Library()
+    this.seeder = new Seeder(this)
     this.bookAppender = new BookAppender(this)
     this.form = new Form(this)
   }
 
   start() {
-    this.populateTable()
+    this.seeder.populateTable()
     this.form.watchSubmitButton()
-  }
-
-  populateTable() {
-    const books = new Seeds().books
-
-    books.forEach(book => {
-      this.bookAppender.call(book)
-    })
   }
 
   deleteBook(event) {
@@ -28,12 +21,19 @@ class App {
   }
 }
 
-class Seeds {
-  constructor() {
+class Seeder {
+  constructor(app) {
+    this.app = app
     this.books = [
       { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' },
       { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' }
     ]
+  }
+
+  populateTable() {
+    this.books.forEach(book => {
+      this.app.bookAppender.call(book)
+    })
   }
 }
 
