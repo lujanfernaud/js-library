@@ -4,8 +4,8 @@ class App {
   constructor() {
     this.library = new Library()
     this.seeder = new Seeder(this)
-    this.bookAppender = new BookAppender(this)
     this.form = new Form(this)
+    this.bookAppender = new BookAppender(this)
   }
 
   start() {
@@ -40,6 +40,38 @@ class Seeder {
 class Library {
   constructor() {
     this.books = []
+  }
+}
+
+class Form {
+  constructor(app) {
+    this.app = app
+    this.title = document.getElementById('form-input-title').value
+    this.author = document.getElementById('form-input-author').value
+    this.status = document.getElementById('form-select').value
+    this.submitButton = document.getElementById('submit')
+  }
+
+  watchSubmitButton() {
+    this.submitButton.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      this.submitBook()
+    })
+  }
+
+  submitBook() {
+    const book = new Book(this.title, this.author, this.status)
+
+    return this.app.bookAppender.call(book)
+  }
+}
+
+class Book {
+  constructor(title, author, status) {
+    this.title = title
+    this.author = author
+    this.status = status
   }
 }
 
@@ -92,38 +124,6 @@ class BookAppender {
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
-  }
-}
-
-class Form {
-  constructor(app) {
-    this.app = app
-    this.title = document.getElementById('form-input-title').value
-    this.author = document.getElementById('form-input-author').value
-    this.status = document.getElementById('form-select').value
-    this.submitButton = document.getElementById('submit')
-  }
-
-  watchSubmitButton() {
-    this.submitButton.addEventListener('click', (event) => {
-      event.preventDefault()
-
-      this.submitBook()
-    })
-  }
-
-  submitBook() {
-    const book = new Book(this.title, this.author, this.status)
-
-    return this.app.bookAppender.call(book)
-  }
-}
-
-class Book {
-  constructor(title, author, status) {
-    this.title = title
-    this.author = author
-    this.status = status
   }
 }
 
