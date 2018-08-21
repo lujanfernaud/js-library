@@ -25,7 +25,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody class="table__body">
+          <tbody class="table__body" id="table-body">
             <tr>
               <td>Night Watch</td>
               <td>Terry Pratchett</td>
@@ -40,24 +40,26 @@
         <form action="" class="form">
           <div class="form__group">
             <label for="title" class="form__group-label">Title</label>
-            <input type="text" name="title" class="form__group-input">
+            <input type="text" name="title" id="form-input-title"
+              class="form__group-input">
           </div>
 
           <div class="form__group">
             <label for="author" class="form__group-label">Author</label>
-            <input type="text" name="author" class="form__group-input">
+            <input type="text" name="author" id="form-input-author"
+              class="form__group-input">
           </div>
 
           <div class="form__group">
             <label for="status" class="form__group-label">Status</label>
-            <select name="status" id="" class="form__group-select">
-              <option value="read">Read</option>
-              <option value="not-read">Not read</option>
+            <select name="status" id="form-select" class="form__group-select">
+              <option value="Read">Read</option>
+              <option value="Not read">Not read</option>
             </select>
           </div>
 
           <div class="form__group">
-            <button type="submit" class="form__group-button">
+            <button type="submit" class="form__group-button" id="submit">
               Add book
             </button>
           </div>
