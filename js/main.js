@@ -89,7 +89,7 @@ class Form {
   }
 
   submitBook() {
-    if (!this.titleInput.validity.valid && !this.authorInput.validity.valid) {
+    if (!this.titleInput.validity.valid || !this.authorInput.validity.valid) {
       return false
     }
 
