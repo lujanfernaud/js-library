@@ -16,8 +16,41 @@ class Seeder {
   constructor(app) {
     this.app = app
     this.books = [
-      { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' },
-      { title: 'Night Watch', author: 'Terry Pratchett', status: 'Not read' }
+      {
+        title: 'Night Watch',
+        author: 'Terry Pratchett',
+        status: 'Not read'
+      },
+      {
+        title: 'On the Shortness of Life',
+        author: 'Seneca',
+        status: 'Not read'
+      },
+      {
+        title: 'Non Violent Communication',
+        author: 'Marshall B. Rosenberg',
+        status: 'Read'
+      },
+      {
+        title: 'As a Man Thinketh',
+        author: 'James Allen',
+        status: 'Read'
+      },
+      {
+        title: 'The War of Art',
+        author: 'Steven Pressfield',
+        status: 'Read'
+      },
+      {
+        title: 'The Creative Habit',
+        author: 'Twyla Tharp',
+        status: 'Read'
+      },
+      {
+        title: 'Mindfulness in Plain English',
+        author: 'Bhante Henepola Gunaratana',
+        status: 'Read'
+      }
     ]
   }
 
