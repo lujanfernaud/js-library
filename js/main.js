@@ -4,12 +4,14 @@ class App {
   constructor() {
     this.library = new Library()
     this.seeder = new Seeder(this)
+    this.modal = new Modal()
     this.form = new Form(this)
     this.bookManager = new BookManager(this)
   }
 
   start() {
     this.seeder.populateTable()
+    this.modal.watchButtons()
     this.form.watchSubmitButton()
   }
 }
@@ -73,6 +75,8 @@ class Seeder {
 class Form {
   constructor(app) {
     this.app = app
+    this.titleInput = document.getElementById('form-input-title')
+    this.authorInput = document.getElementById('form-input-author')
     this.submitButton = document.getElementById('submit')
   }
 
@@ -85,15 +89,21 @@ class Form {
   }
 
   submitBook() {
-    const title = document.getElementById('form-input-title').value
-    const author = document.getElementById('form-input-author').value
+    if (!this.titleInput.validity.valid && !this.authorInput.validity.valid) {
+      return false
+    }
+
+    const title = this.titleInput.value
+    const author = this.authorInput.value
     const url = document.getElementById('form-input-url').value
     const options = document.getElementById('form-select').options
     const status = options[options.selectedIndex].text
 
     const book = new Book(title, author, url, status)
 
-    return this.app.bookManager.add(book)
+    this.app.bookManager.add(book)
+
+    this.app.modal.closeModal()
   }
 }
 
@@ -241,6 +251,49 @@ class Library {
     if (status !== '' && status !== book.status) {
       this.books[bookIndex].status = status
     }
+  }
+}
+
+class Modal {
+  constructor() {
+    this.modal = document.getElementById('modal')
+    this.backdrop = document.getElementById('modal-backdrop')
+    this.openButtons = document.querySelectorAll('.open-modal')
+    this.closeButton = document.getElementById('close-modal')
+    this.titleInput = document.getElementById('form-input-title')
+  }
+
+  watchButtons() {
+    this.watchOpenButtons()
+    this.watchCloseButton()
+    this.watchBackdrop()
+  }
+
+  watchOpenButtons() {
+    this.openButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        this.modal.classList.add('display-flex')
+
+        // For some reason it doesn't work with the 'autofocus' HTML property.
+        this.titleInput.focus()
+      })
+    })
+  }
+
+  watchCloseButton() {
+    this.closeButton.addEventListener('click', (event) => {
+      this.closeModal()
+    })
+  }
+
+  watchBackdrop() {
+    this.backdrop.addEventListener('click', (event) => {
+      this.closeModal()
+    })
+  }
+
+  closeModal() {
+    return this.modal.classList.remove('display-flex')
   }
 }
 

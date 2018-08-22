@@ -6,6 +6,14 @@
 // Header
 
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
 .header__h1 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -20,6 +28,11 @@
   width: 100%;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.row-btn {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 .table {
@@ -60,11 +73,68 @@
   }
 }
 
+
+// Modal
+
+
+.modal {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color-black, .55);
+    z-index: 1;
+  }
+
+  &__content {
+    @include flex-center
+    flex-direction: column;
+    position: relative;
+    padding: 4rem;
+    width: 50%;
+    max-width: 900px;
+    min-height: 335px;
+    height: 55vh;
+    background-color: $color-white;
+    border: 1px solid $color-dark-grey-2;
+    border-radius: $border-radius;
+    z-index: 10;
+  }
+}
+
+.close {
+  position: absolute;
+  top: .8rem;
+  right: 1rem;
+  color: $color-dark-grey-1;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .form {
   @include flex-center;
   flex-direction: column;
-  flex-basis: 50%;
-  margin-top: 2rem;
+  flex-basis: 100%;
+  width: 75%;
 
   &__group {
     display: flex;
