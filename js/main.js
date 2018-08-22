@@ -124,16 +124,8 @@ class BookManager {
   }
 
   addInformationToRow(book) {
-    Object.values(book).forEach(value => {
-      if (value === book.id || value === book.url) { return }
-
-      if (value === book.title) {
-        this.addTitleCell(book)
-      } else if (value === book.author) {
-        this.addAuthorCell(value)
-      }
-    })
-
+    this.addTitleCell(book)
+    this.addAuthorCell(book)
     this.addStatusButton(book)
     this.addDeleteButton(book)
   }
@@ -151,9 +143,9 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addAuthorCell(value) {
+  addAuthorCell(book) {
     const td = document.createElement('td')
-    const text = document.createTextNode(value)
+    const text = document.createTextNode(book.author)
 
     td.appendChild(text)
     this.tr.appendChild(td)
