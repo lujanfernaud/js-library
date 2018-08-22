@@ -1,5 +1,3 @@
-const BOOK_STATUS_INDEX = 2
-
 class App {
   constructor() {
     this.library = new Library()
@@ -27,12 +25,6 @@ class Seeder {
     this.books.forEach(book => {
       this.app.bookManager.add(book)
     })
-  }
-}
-
-class Library {
-  constructor() {
-    this.books = []
   }
 }
 
@@ -73,32 +65,34 @@ class Book {
 class BookManager {
   constructor(app) {
     this.app = app
-    this.libraryBooks = app.library.books
   }
 
   add(book) {
+    this.app.library.add(book)
+
     this.createNewRow()
     this.addInformationToRow(book)
-
-    return this.libraryBooks.push(book)
   }
 
   createNewRow() {
     this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
+    this.tr.id = this.app.library.currentId
     this.tableBody.appendChild(this.tr)
   }
 
   addInformationToRow(book) {
     Object.values(book).forEach((value, index) => {
-      if (index !== BOOK_STATUS_INDEX) {
+      if (value === book.id) { return }
+
+      if (value !== book.status) {
         this.addCell(value)
       } else {
         this.addButton(value)
       }
     })
 
-    this.addButton('Delete', { id: 'delete' })
+    this.addButton('Delete', book, { id: 'delete' })
   }
 
   addCell(value) {
@@ -109,13 +103,15 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addButton(value, { id = '' } = {}) {
+  addButton(value, book = {}, { id = '' } = {}) {
     const text = document.createTextNode(value)
     const td = document.createElement('td')
     const button = document.createElement('button')
     button.id = id
 
     if (id === 'delete') {
+      button.bookLibrary = this.app.library
+      button.book = book
       button.onclick = this.removeBook
     }
 
@@ -128,7 +124,30 @@ class BookManager {
     const row = event.target.parentNode.parentNode
     const tbody = row.parentNode
 
-    return tbody.removeChild(row)
+    tbody.removeChild(row)
+
+    this.bookLibrary.remove(this.book)
+  }
+}
+
+class Library {
+  constructor() {
+    this.books = []
+    this.currentId = -1
+  }
+
+  add(book) {
+    this.currentId += 1
+
+    book.id = this.currentId
+
+    return this.books.push(book)
+  }
+
+  remove(book) {
+    const bookIndex = this.books.indexOf(book)
+
+    this.books.splice(bookIndex, 1)
   }
 }
 
