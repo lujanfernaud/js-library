@@ -1,3 +1,5 @@
+const GOODREADS_URL = /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,30})/g
+
 class App {
   constructor() {
     this.library = new Library()
@@ -125,12 +127,20 @@ class BookManager {
 
   addInformationToRow(book) {
     this.addTitleCell(book)
-    this.addAuthorCell(book)
+    this.addNormalCell(book.author)
     this.addStatusButton(book)
     this.addDeleteButton(book)
   }
 
   addTitleCell(book) {
+    if (book.url.match(GOODREADS_URL)) {
+      this.addLinkCell(book)
+    } else {
+      this.addNormalCell(book.title)
+    }
+  }
+
+  addLinkCell(book) {
     const td = document.createElement('td')
     const a = document.createElement('a')
     const text = document.createTextNode(book.title)
@@ -143,9 +153,9 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addAuthorCell(book) {
+  addNormalCell(value) {
     const td = document.createElement('td')
-    const text = document.createTextNode(book.author)
+    const text = document.createTextNode(value)
 
     td.appendChild(text)
     this.tr.appendChild(td)
