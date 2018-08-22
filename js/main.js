@@ -88,7 +88,7 @@ class BookManager {
       if (value !== book.status) {
         this.addInformationCell(value)
       } else {
-        this.addStatusButton(value)
+        this.addStatusButton(book)
       }
     })
 
@@ -103,14 +103,26 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addStatusButton(status) {
+  addStatusButton(book) {
     const td = document.createElement('td')
     const button = document.createElement('button')
-    const text = document.createTextNode(status)
+    const text = document.createTextNode(book.status)
+
+    button.bookLibrary = this.app.library
+    button.book = book
+    button.onclick = this.updateBookStatus
 
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
+  }
+
+  updateBookStatus(event) {
+    const button = event.target.firstChild
+
+    button.data = button.data === 'Not read' ? 'Read' : 'Not read'
+
+    this.bookLibrary.update(this.book, { status: button.data })
   }
 
   addDeleteButton(book) {
@@ -155,6 +167,22 @@ class Library {
     const bookIndex = this.books.indexOf(book)
 
     this.books.splice(bookIndex, 1)
+  }
+
+  update(book, { title = '', author = '', status = '' } = {}) {
+    const bookIndex = this.books.indexOf(book)
+
+    if (title !== '' && title !== book.title) {
+      this.books[bookIndex].title = title
+    }
+
+    if (author !== '' && author !== book.author) {
+      this.books[bookIndex].author = author
+    }
+
+    if (status !== '' && status !== book.status) {
+      this.books[bookIndex].status = status
+    }
   }
 }
 
