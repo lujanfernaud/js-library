@@ -13,13 +13,8 @@
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
     "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lujanfernaud/js-library.git"
-  },
   "author": "Luján Fernaud",
   "license": "ISC",
-  "homepage": "https://github.com/lujanfernaud/js-library#readme",
   "devDependencies": {
     "autoprefixer": "^9.1.2",
     "node-sass": "^4.9.3",
