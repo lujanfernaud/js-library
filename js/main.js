@@ -274,7 +274,7 @@ class Modal {
       button.addEventListener('click', (event) => {
         this.modal.classList.add('display-flex')
 
-        // For some reason it doesn't work with the 'autofocus' HTML property.
+        // For some reason the 'autofocus' HTML property doesn't work.
         this.titleInput.focus()
       })
     })
