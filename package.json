@@ -1,7 +1,7 @@
 {
-  "name": "js-library",
+  "name": "js-reading-list",
   "version": "1.0.0",
-  "description": "JS Library",
+  "description": "JS Reading List",
   "private": true,
   "main": "js/main.js",
   "scripts": {

@@ -1,3 +1,3 @@
-# JS Library
+# JS Reading List
 
 *Work in progress.*
