@@ -82,38 +82,45 @@ class BookManager {
   }
 
   addInformationToRow(book) {
-    Object.values(book).forEach((value, index) => {
+    Object.values(book).forEach(value => {
       if (value === book.id) { return }
 
       if (value !== book.status) {
-        this.addCell(value)
+        this.addInformationCell(value)
       } else {
-        this.addButton(value)
+        this.addStatusButton(value)
       }
     })
 
-    this.addButton('Delete', book, { id: 'delete' })
+    this.addDeleteButton(book)
   }
 
-  addCell(value) {
-    const text = document.createTextNode(value)
+  addInformationCell(value) {
     const td = document.createElement('td')
+    const text = document.createTextNode(value)
 
     td.appendChild(text)
     this.tr.appendChild(td)
   }
 
-  addButton(value, book = {}, { id = '' } = {}) {
-    const text = document.createTextNode(value)
+  addStatusButton(status) {
     const td = document.createElement('td')
     const button = document.createElement('button')
-    button.id = id
+    const text = document.createTextNode(status)
 
-    if (id === 'delete') {
-      button.bookLibrary = this.app.library
-      button.book = book
-      button.onclick = this.removeBook
-    }
+    button.appendChild(text)
+    td.appendChild(button)
+    this.tr.appendChild(td)
+  }
+
+  addDeleteButton(book) {
+    const td = document.createElement('td')
+    const button = document.createElement('button')
+    const text = document.createTextNode('Delete')
+
+    button.bookLibrary = this.app.library
+    button.book = book
+    button.onclick = this.removeBook
 
     button.appendChild(text)
     td.appendChild(button)
