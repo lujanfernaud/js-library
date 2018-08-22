@@ -66,7 +66,7 @@ class Seeder {
   }
 
   populateTable() {
-    this.books.forEach(book => {
+    this.books.reverse().forEach(book => {
       this.app.bookManager.add(book)
     })
   }
@@ -132,7 +132,7 @@ class BookManager {
     this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
     this.tr.id = this.app.library.currentId
-    this.tableBody.appendChild(this.tr)
+    this.tableBody.prepend(this.tr)
   }
 
   addInformationToRow(book) {
