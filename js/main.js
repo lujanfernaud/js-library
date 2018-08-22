@@ -19,36 +19,43 @@ class Seeder {
       {
         title: 'Night Watch',
         author: 'Terry Pratchett',
+        url: 'https://www.goodreads.com/book/show/47989.Night_Watch',
         status: 'Not read'
       },
       {
         title: 'On the Shortness of Life',
         author: 'Seneca',
+        url: 'https://www.goodreads.com/book/show/97412.On_the_Shortness_of_Life',
         status: 'Not read'
       },
       {
         title: 'Non Violent Communication',
         author: 'Marshall B. Rosenberg',
+        url: 'https://www.goodreads.com/book/show/560861.Non_Violent_Communication',
         status: 'Read'
       },
       {
         title: 'As a Man Thinketh',
         author: 'James Allen',
+        url: 'https://www.goodreads.com/book/show/81959.As_a_Man_Thinketh',
         status: 'Read'
       },
       {
         title: 'The War of Art',
         author: 'Steven Pressfield',
+        url: 'https://www.goodreads.com/book/show/1319.The_War_of_Art',
         status: 'Read'
       },
       {
         title: 'The Creative Habit',
         author: 'Twyla Tharp',
+        url: 'https://www.goodreads.com/book/show/254799.The_Creative_Habit',
         status: 'Read'
       },
       {
         title: 'Mindfulness in Plain English',
         author: 'Bhante Henepola Gunaratana',
+        url: 'https://www.goodreads.com/book/show/64369.Mindfulness_in_Plain_English',
         status: 'Read'
       }
     ]
@@ -78,19 +85,21 @@ class Form {
   submitBook() {
     const title = document.getElementById('form-input-title').value
     const author = document.getElementById('form-input-author').value
+    const url = document.getElementById('form-input-url').value
     const options = document.getElementById('form-select').options
     const status = options[options.selectedIndex].text
 
-    const book = new Book(title, author, status)
+    const book = new Book(title, author, url, status)
 
     return this.app.bookManager.add(book)
   }
 }
 
 class Book {
-  constructor(title, author, status) {
+  constructor(title, author, url, status) {
     this.title = title
     this.author = author
+    this.url = url
     this.status = status
   }
 }
@@ -116,19 +125,33 @@ class BookManager {
 
   addInformationToRow(book) {
     Object.values(book).forEach(value => {
-      if (value === book.id) { return }
+      if (value === book.id || value === book.url) { return }
 
-      if (value !== book.status) {
-        this.addInformationCell(value)
-      } else {
-        this.addStatusButton(book)
+      if (value === book.title) {
+        this.addTitleCell(book)
+      } else if (value === book.author) {
+        this.addAuthorCell(value)
       }
     })
 
+    this.addStatusButton(book)
     this.addDeleteButton(book)
   }
 
-  addInformationCell(value) {
+  addTitleCell(book) {
+    const td = document.createElement('td')
+    const a = document.createElement('a')
+    const text = document.createTextNode(book.title)
+
+    a.href = book.url
+    a.target = 'blank'
+
+    a.appendChild(text)
+    td.appendChild(a)
+    this.tr.appendChild(td)
+  }
+
+  addAuthorCell(value) {
     const td = document.createElement('td')
     const text = document.createTextNode(value)
 
