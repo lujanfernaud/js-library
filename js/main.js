@@ -2,7 +2,8 @@ const GOODREADS_URL = /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,3
 
 class App {
   constructor() {
-    this.library = new Library()
+    this.localStorage = new LocalStorage()
+    this.library = new Library(this)
     this.seeder = new Seeder(this)
     this.modal = new Modal()
     this.form = new Form(this)
@@ -10,7 +11,14 @@ class App {
   }
 
   start() {
-    this.seeder.populateTable()
+    if (localStorage.books && localStorage.books.length > 0) {
+      this.localStorage.books.forEach(book => {
+        this.bookManager.add(book)
+      })
+    } else {
+      this.seeder.populateTable()
+    }
+
     this.modal.watchButtons()
     this.form.watchSubmitButton()
   }
@@ -218,7 +226,8 @@ class BookManager {
 }
 
 class Library {
-  constructor() {
+  constructor(app) {
+    this.app = app
     this.books = []
     this.currentId = -1
   }
@@ -228,13 +237,17 @@ class Library {
 
     book.id = this.currentId
 
-    return this.books.push(book)
+    this.books.push(book)
+
+    this.updateLocalStorage()
   }
 
   remove(book) {
     const bookIndex = this.books.indexOf(book)
 
     this.books.splice(bookIndex, 1)
+
+    this.updateLocalStorage()
   }
 
   update(book, { title = '', author = '', status = '' } = {}) {
@@ -251,6 +264,60 @@ class Library {
     if (status !== '' && status !== book.status) {
       this.books[bookIndex].status = status
     }
+
+    this.updateLocalStorage()
+  }
+
+  updateLocalStorage() {
+    if (!this.app.localStorage.available()) { return }
+
+    this.app.localStorage.updateBooks(this.books)
+    this.app.localStorage.updateCurrentId(this.currentId)
+  }
+}
+
+class LocalStorage {
+  constructor() {
+    this.books = this.setBooks()
+  }
+
+  setBooks() {
+    if (this.available() && localStorage.getItem('books')) {
+      return JSON.parse(localStorage.getItem('books'))
+    } else {
+      return []
+    }
+  }
+
+  available() {
+    try {
+      var storage = window['localStorage']
+      var x = '__storage_test__'
+      storage.setItem(x, x)
+      storage.removeItem(x)
+      return true
+    } catch (e) {
+      return e instanceof DOMException && (
+        // Everything except Firefox.
+        e.code === 22 ||
+        // Firefox.
+        e.code === 1014 ||
+        // Test name field too, because code might not be present
+        // everything except Firefox.
+        e.name === 'QuotaExceededError' ||
+        // Firefox.
+        e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+      // Acknowledge QuotaExceededError only if there's something already stored.
+      storage.length !== 0
+    }
+  }
+
+  updateBooks(books) {
+    localStorage.setItem('books', JSON.stringify(books))
+  }
+
+  updateCurrentId(currentId) {
+    localStorage.setItem('currentId', JSON.stringify(currentId))
   }
 }
 
