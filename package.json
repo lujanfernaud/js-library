@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "description": "JS Reading List",
   "private": true,
-  "main": "js/main.js",
   "scripts": {
     "start": "npm-run-all --parallel devserver watch:sass",
     "devserver": "live-server",
-    "watch:sass": "node-sass sass/main.scss css/style.css -w",
+    "watch:sass": "node-sass src/sass/main.scss dist/css/style.css -w",
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
-    "compile:sass": "node-sass sass/main.scss css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
-    "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed"
+    "compile:sass": "node-sass src/sass/main.scss src/temp/style.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/temp/style.comp.css -o src/temp/style.prefix.css",
+    "compress:css": "node-sass src/temp/style.prefix.css dist/css/style.css --output-style compressed",
+    "build:js": "webpack",
+    "build": "npm-run-all build:css build:js"
   },
   "author": "Luján Fernaud",
   "license": "ISC",
@@ -20,6 +21,8 @@
     "node-sass": "^4.9.3",
     "normalize.css": "^8.0.0",
     "npm-run-all": "^4.1.3",
-    "postcss-cli": "^6.0.0"
+    "postcss-cli": "^6.0.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
   }
 }
