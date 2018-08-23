@@ -2,31 +2,31 @@ const GOODREADS_URL = /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,3
 
 class App {
   constructor() {
-    this.localStorage = new LocalStorage()
     this.library = new Library(this)
-    this.seeder = new Seeder(this)
+    this.localStorage = new LocalStorage()
+    this.seeds = new Seeds(this)
+    this.bookManager = new BookManager(this)
     this.modal = new Modal()
     this.form = new Form(this)
-    this.bookManager = new BookManager(this)
   }
 
   start() {
-    if (localStorage.books && localStorage.books.length > 0) {
-      this.localStorage.books.forEach(book => {
-        this.bookManager.add(book)
-      })
-    } else {
-      this.seeder.populateTable()
-    }
-
+    this.populateTable()
     this.modal.watchButtons()
     this.form.watchSubmitButton()
   }
+
+  populateTable() {
+    if (localStorage.books && this.localStorage.booksNotEmpty()) {
+      this.bookManager.addCollection(this.localStorage.books)
+    } else {
+      this.bookManager.addCollection(this.seeds.books.reverse())
+    }
+  }
 }
 
-class Seeder {
+class Seeds {
   constructor(app) {
-    this.app = app
     this.books = [
       {
         title: 'Night Watch',
@@ -71,12 +71,6 @@ class Seeder {
         status: 'Read'
       }
     ]
-  }
-
-  populateTable() {
-    this.books.reverse().forEach(book => {
-      this.app.bookManager.add(book)
-    })
   }
 }
 
@@ -127,6 +121,10 @@ class Book {
 class BookManager {
   constructor(app) {
     this.app = app
+  }
+
+  addCollection(books) {
+    books.forEach(book => { this.add(book) })
   }
 
   add(book) {
@@ -310,6 +308,10 @@ class LocalStorage {
       // Acknowledge QuotaExceededError only if there's something already stored.
       storage.length !== 0
     }
+  }
+
+  booksNotEmpty() {
+    return JSON.parse(localStorage.getItem('books')).length !== 0
   }
 
   updateBooks(books) {
