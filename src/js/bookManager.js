@@ -1,6 +1,6 @@
 class BookManager {
   static get GoodreadsURL() {
-    return /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,30})/g
+    return /(https:\/\/www.goodreads.com\/book\/show\/\d{1,8}\.\w{2,35})/g
   }
 
   constructor(app) {
