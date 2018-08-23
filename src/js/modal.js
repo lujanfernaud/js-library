@@ -8,14 +8,20 @@ class Modal {
   }
 
   watchButtons() {
-    this.watchOpenButtons()
-    this.watchCloseButton()
-    this.watchBackdrop()
+    this._watchOpenButtons()
+    this._watchCloseButton()
+    this._watchBackdrop()
   }
 
-  watchOpenButtons() {
+  closeModal() {
+    return this.modal.classList.remove('display-flex')
+  }
+
+  // private
+
+  _watchOpenButtons() {
     this.openButtons.forEach(button => {
-      button.addEventListener('click', (event) => {
+      button.addEventListener('click', () => {
         this.modal.classList.add('display-flex')
 
         // For some reason the 'autofocus' HTML property doesn't work.
@@ -24,20 +30,16 @@ class Modal {
     })
   }
 
-  watchCloseButton() {
-    this.closeButton.addEventListener('click', (event) => {
+  _watchCloseButton() {
+    this.closeButton.addEventListener('click', () => {
       this.closeModal()
     })
   }
 
-  watchBackdrop() {
-    this.backdrop.addEventListener('click', (event) => {
+  _watchBackdrop() {
+    this.backdrop.addEventListener('click', () => {
       this.closeModal()
     })
-  }
-
-  closeModal() {
-    return this.modal.classList.remove('display-flex')
   }
 }
 

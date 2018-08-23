@@ -12,7 +12,7 @@ class Library {
 
     this.books.push(book)
 
-    this.updateLocalStorage()
+    this._updateLocalStorage()
   }
 
   remove(book) {
@@ -20,7 +20,7 @@ class Library {
 
     this.books.splice(bookIndex, 1)
 
-    this.updateLocalStorage()
+    this._updateLocalStorage()
   }
 
   update(book, { title = '', author = '', status = '' } = {}) {
@@ -38,10 +38,12 @@ class Library {
       this.books[bookIndex].status = status
     }
 
-    this.updateLocalStorage()
+    this._updateLocalStorage()
   }
 
-  updateLocalStorage() {
+  // private
+
+  _updateLocalStorage() {
     if (!this.app.localStorage.available()) { return }
 
     this.app.localStorage.updateBooks(this.books)

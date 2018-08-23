@@ -12,11 +12,13 @@ class Form {
     this.submitButton.addEventListener('click', (event) => {
       event.preventDefault()
 
-      this.submitBook()
+      this._submitBook()
     })
   }
 
-  submitBook() {
+  // private
+
+  _submitBook() {
     if (!this.titleInput.validity.valid || !this.authorInput.validity.valid) {
       return false
     }

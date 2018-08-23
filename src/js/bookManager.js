@@ -8,39 +8,41 @@ class BookManager {
   }
 
   addCollection(books) {
-    books.forEach(book => { this.add(book) })
+    books.forEach(book => this.add(book))
   }
 
   add(book) {
     this.app.library.add(book)
 
-    this.createNewRow()
-    this.addInformationToRow(book)
+    this._createNewRow()
+    this._addInformationToRow(book)
   }
 
-  createNewRow() {
+  // private
+
+  _createNewRow() {
     this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
     this.tr.id = this.app.library.currentId
     this.tableBody.prepend(this.tr)
   }
 
-  addInformationToRow(book) {
-    this.addTitleCell(book)
-    this.addNormalCell(book.author)
-    this.addStatusButton(book)
-    this.addDeleteButton(book)
+  _addInformationToRow(book) {
+    this._addTitleCell(book)
+    this._addNormalCell(book.author)
+    this._addStatusButton(book)
+    this._addDeleteButton(book)
   }
 
-  addTitleCell(book) {
+  _addTitleCell(book) {
     if (book.url.match(BookManager.GoodreadsURL)) {
-      this.addLinkCell(book)
+      this._addLinkCell(book)
     } else {
-      this.addNormalCell(book.title)
+      this._addNormalCell(book.title)
     }
   }
 
-  addLinkCell(book) {
+  _addLinkCell(book) {
     const td = document.createElement('td')
     const a = document.createElement('a')
     const text = document.createTextNode(book.title)
@@ -53,7 +55,7 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addNormalCell(value) {
+  _addNormalCell(value) {
     const td = document.createElement('td')
     const text = document.createTextNode(value)
 
@@ -61,21 +63,21 @@ class BookManager {
     this.tr.appendChild(td)
   }
 
-  addStatusButton(book) {
+  _addStatusButton(book) {
     const td = document.createElement('td')
     const button = document.createElement('button')
     const text = document.createTextNode(book.status)
 
     button.bookLibrary = this.app.library
     button.book = book
-    button.onclick = this.updateBookStatus
+    button.onclick = this._updateBookStatus
 
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
   }
 
-  updateBookStatus(event) {
+  _updateBookStatus(event) {
     const button = event.target.firstChild
 
     button.data = button.data === 'Not read' ? 'Read' : 'Not read'
@@ -83,21 +85,21 @@ class BookManager {
     this.bookLibrary.update(this.book, { status: button.data })
   }
 
-  addDeleteButton(book) {
+  _addDeleteButton(book) {
     const td = document.createElement('td')
     const button = document.createElement('button')
     const text = document.createTextNode('Delete')
 
     button.bookLibrary = this.app.library
     button.book = book
-    button.onclick = this.removeBook
+    button.onclick = this._removeBook
 
     button.appendChild(text)
     td.appendChild(button)
     this.tr.appendChild(td)
   }
 
-  removeBook(event) {
+  _removeBook(event) {
     const row = event.target.parentNode.parentNode
     const tbody = row.parentNode
 

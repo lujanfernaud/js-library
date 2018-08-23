@@ -1,14 +1,6 @@
 class LocalStorage {
   constructor() {
-    this.books = this.setBooks()
-  }
-
-  setBooks() {
-    if (this.available() && localStorage.getItem('books')) {
-      return JSON.parse(localStorage.getItem('books'))
-    } else {
-      return []
-    }
+    this.books = this._setBooks()
   }
 
   available() {
@@ -44,6 +36,16 @@ class LocalStorage {
 
   updateCurrentId(currentId) {
     localStorage.setItem('currentId', JSON.stringify(currentId))
+  }
+
+  // private
+
+  _setBooks() {
+    if (this.available() && localStorage.getItem('books')) {
+      return JSON.parse(localStorage.getItem('books'))
+    } else {
+      return []
+    }
   }
 }
 
