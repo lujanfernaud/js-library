@@ -1,6 +1,8 @@
-const GOODREADS_URL = /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,30})/g
-
 class BookManager {
+  static get GoodreadsURL() {
+    return /(https:\/\/www.goodreads.com\/book\/show\/\d{3,7}\.\w{2,30})/g
+  }
+
   constructor(app) {
     this.app = app
   }
@@ -31,7 +33,7 @@ class BookManager {
   }
 
   addTitleCell(book) {
-    if (book.url.match(GOODREADS_URL)) {
+    if (book.url.match(BookManager.GoodreadsURL)) {
       this.addLinkCell(book)
     } else {
       this.addNormalCell(book.title)
