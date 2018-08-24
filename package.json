@@ -4,14 +4,18 @@
   "description": "JS Reading List",
   "private": true,
   "scripts": {
-    "start": "npm-run-all --parallel devserver watch:sass",
+    "start": "npm-run-all --parallel devserver watch:sass watch:js",
     "devserver": "live-server",
     "watch:sass": "node-sass src/sass/main.scss dist/css/style.css -w",
+    "watch:js": "webpack -w",
+
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
     "compile:sass": "node-sass src/sass/main.scss src/temp/style.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/temp/style.comp.css -o src/temp/style.prefix.css",
     "compress:css": "node-sass src/temp/style.prefix.css dist/css/style.css --output-style compressed",
+
     "build:js": "webpack",
+
     "build": "npm-run-all build:css build:js"
   },
   "author": "Luján Fernaud",
