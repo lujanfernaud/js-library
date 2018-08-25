@@ -39,7 +39,6 @@
 
   &__header {
     height: 3rem;
-    border-bottom: 1px solid;
 
     th {
       text-align: left;
@@ -49,19 +48,20 @@
 
   &__body {
     tr {
-      border-bottom: 1px solid;
+      border-bottom: 1px solid $grey-lighter;
     }
 
     td {
       padding: $table-cell-padding;
-
-      &:nth-of-type(3),
-      &:nth-of-type(4) {
-        width: 15%;
-      }
+      vertical-align: middle;
 
       &:nth-of-type(3) {
+        width: 15%;
         padding-right: 0;
+      }
+
+      &:nth-of-type(4) {
+        width: 5%;
       }
 
       button {
@@ -99,7 +99,6 @@
     @include flex-center
     flex-direction: column;
     position: relative;
-    padding: 4rem;
     width: 50%;
     max-width: 900px;
     min-height: 335px;

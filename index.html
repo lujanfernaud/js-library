@@ -12,12 +12,14 @@
 
     <header class="header">
       <h1 class="header__h1">Reading List</h1>
-      <button class="btn btn-lg open-modal">Add book</button>
+      <button class="button button-lg is-primary open-modal">
+        Add book
+      </button>
     </header>
 
     <main>
       <div class="row">
-        <table class="table">
+        <table class="table is-stripped is-hoverable">
           <thead class="table__header">
             <tr>
               <th>Title</th>
@@ -33,7 +35,9 @@
       </div>
 
       <div class="row row-btn">
-        <button class="btn btn-lg open-modal">Add book</button>
+        <button class="button button-lg is-primary open-modal">
+          Add book
+        </button>
       </div>
     </main>
 
@@ -46,34 +50,48 @@
         <span class="close" id="close-modal">&times;</span>
 
         <form action="" class="form">
-          <div class="form__group">
-            <label for="title" class="form__group-label">Title *</label>
+          <div class="form__group field">
+            <label for="title" class="form__group-label label">
+              Title *
+            </label>
             <input type="text" name="title" id="form-input-title"
-              class="form__group-input" placeholder="Book title" minlength="2" required autofocus="">
+              class="form__group-input input" placeholder="Book title" minlength="2" required autofocus="">
           </div>
 
-          <div class="form__group">
-            <label for="author" class="form__group-label">Author *</label>
+          <div class="form__group field">
+            <label for="author" class="form__group-label label">
+              Author *
+            </label>
             <input type="text" name="author" id="form-input-author"
-              class="form__group-input" placeholder="Book author" minlength="2" required>
+              class="form__group-input input" placeholder="Book author" minlength="2" required>
           </div>
 
-          <div class="form__group">
-            <label for="url" class="form__group-label">Goodreads URL</label>
+          <div class="form__group field">
+            <label for="url" class="form__group-label label">
+              Goodreads URL
+            </label>
             <input type="url" name="url" placeholder="https://www.goodreads.com/book/show/111111.Book_Title" id="form-input-url"
-              class="form__group-input">
+              class="form__group-input input">
           </div>
 
-          <div class="form__group">
-            <label for="status" class="form__group-label">Status</label>
-            <select name="status" id="form-select" class="form__group-select">
-              <option value="Read">Read</option>
-              <option value="Not read" selected>Not read</option>
-            </select>
+          <div class="form__group field">
+            <label for="status" class="form__group-label label">
+              Status
+            </label>
+            <div class="control">
+              <div class="select">
+                <select name="status" id="form-select"
+                  class="form__group-select">
+                  <option value="Read">Read</option>
+                  <option value="Not read" selected>Not read</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <div class="form__group">
-            <button type="submit" class="btn btn-lg form__group-button"
+          <div class="form__group field">
+            <button type="submit"
+              class="form__group-button button button-lg is-primary"
               id="submit">
               Add book
             </button>

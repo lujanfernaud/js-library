@@ -6,19 +6,7 @@
 // Button
 
 
-button {
-  padding: .25rem 1rem;
-  background-color: $color-light-grey-1;
-  border: 1px solid $color-greyish-blue;
-  border-radius: $border-radius;
-
-  &:hover,
-  &:active {
-    background-color: $color-white;
-  }
-}
-
-.btn-lg {
+.button-lg {
   height: 3rem;
   padding: .5rem 2rem;
 }

@@ -68,6 +68,14 @@ class BookManager {
     const button = document.createElement('button')
     const text = document.createTextNode(book.status)
 
+    button.classList.add('button')
+
+    if (book.status === 'Read') {
+      button.classList.add('is-success')
+    } else {
+      button.classList.add('is-warning')
+    }
+
     button.bookLibrary = this.app.library
     button.book = book
     button.onclick = this._updateBookStatus
@@ -78,24 +86,34 @@ class BookManager {
   }
 
   _updateBookStatus(event) {
-    const button = event.target.firstChild
+    const button = event.target
 
-    button.data = button.data === 'Not read' ? 'Read' : 'Not read'
+    button.firstChild.data = button.firstChild.data === 'Not read' ? 'Read' : 'Not read'
 
-    this.bookLibrary.update(this.book, { status: button.data })
+    if (this.book.status === 'Read') {
+      button.classList.remove('is-success')
+      button.classList.add('is-warning')
+    } else {
+      button.classList.remove('is-warning')
+      button.classList.add('is-success')
+    }
+
+    this.bookLibrary.update(this.book, { status: button.firstChild.data })
   }
 
   _addDeleteButton(book) {
     const td = document.createElement('td')
-    const button = document.createElement('button')
+    const a = document.createElement('a')
     const text = document.createTextNode('Delete')
 
-    button.bookLibrary = this.app.library
-    button.book = book
-    button.onclick = this._removeBook
+    a.classList = 'delete is-large'
 
-    button.appendChild(text)
-    td.appendChild(button)
+    a.bookLibrary = this.app.library
+    a.book = book
+    a.onclick = this._removeBook
+
+    a.appendChild(text)
+    td.appendChild(a)
     this.tr.appendChild(td)
   }
 

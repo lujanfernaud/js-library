@@ -8,14 +8,11 @@
     "devserver": "live-server",
     "watch:sass": "node-sass src/sass/main.scss dist/css/style.css -w",
     "watch:js": "webpack -w",
-
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
     "compile:sass": "node-sass src/sass/main.scss src/temp/style.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/temp/style.comp.css -o src/temp/style.prefix.css",
     "compress:css": "node-sass src/temp/style.prefix.css dist/css/style.css --output-style compressed",
-
     "build:js": "webpack",
-
     "build": "npm-run-all build:css build:js"
   },
   "author": "Luján Fernaud",
@@ -28,5 +25,11 @@
     "postcss-cli": "^6.0.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-rc.2",
+    "@babel/preset-env": "^7.0.0-rc.2",
+    "babel-loader": "^8.0.0-beta.6",
+    "bulma": "^0.7.1"
   }
 }
