@@ -1,3 +1,3 @@
 # JS Reading List
 
-*Work in progress.*
+A simple reading list built with ES6.
