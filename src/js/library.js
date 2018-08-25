@@ -8,6 +8,7 @@ class Library {
   add(book) {
     this.currentId += 1
 
+    book = this._downcaseText(book)
     book.id = this.currentId
 
     this.books.push(book)
@@ -27,11 +28,11 @@ class Library {
     const bookIndex = this.books.indexOf(book)
 
     if (title !== '' && title !== book.title) {
-      this.books[bookIndex].title = title
+      this.books[bookIndex].title = title.toLowerCase()
     }
 
     if (author !== '' && author !== book.author) {
-      this.books[bookIndex].author = author
+      this.books[bookIndex].author = author.toLowerCase()
     }
 
     if (status !== '' && status !== book.status) {
@@ -42,6 +43,15 @@ class Library {
   }
 
   // private
+
+  _downcaseText(book) {
+    let newBook = book
+
+    newBook.title = book.title.toLowerCase()
+    newBook.author = book.author.toLowerCase()
+
+    return newBook
+  }
 
   _updateLocalStorage() {
     if (!this.app.localStorage.available()) { return }

@@ -3186,6 +3186,8 @@ body {
   .table__body td {
     padding: 1.5rem;
     vertical-align: middle; }
+    .table__body td:nth-of-type(1), .table__body td:nth-of-type(2) {
+      text-transform: capitalize; }
     .table__body td:nth-of-type(3) {
       width: 15%;
       padding-right: 0; }

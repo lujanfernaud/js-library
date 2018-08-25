@@ -55,6 +55,11 @@
       padding: $table-cell-padding;
       vertical-align: middle;
 
+      &:nth-of-type(1),
+      &:nth-of-type(2) {
+        text-transform: capitalize;
+      }
+
       &:nth-of-type(3) {
         width: 15%;
         padding-right: 0;
