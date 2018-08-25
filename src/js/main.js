@@ -18,13 +18,13 @@ class App {
   }
 
   start() {
-    this._populateTable()
+    this._populateLibrary()
     this._watchViews()
   }
 
   // private
 
-  _populateTable() {
+  _populateLibrary() {
     if (localStorage.books && this.localStorage.booksNotEmpty()) {
       this.libraryController.addCollection(this.localStorage.books)
     } else {
