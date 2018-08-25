@@ -12,7 +12,14 @@ function compareAuthors(a, b) {
   return 0
 }
 
+function compareStatus(a, b) {
+  if (a.status === b.status) { return a.title - b.title }
+
+  return a.status.localeCompare(b.status)
+}
+
 export {
   compareTitles,
-  compareAuthors
+  compareAuthors,
+  compareStatus
 }
