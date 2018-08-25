@@ -1,12 +1,14 @@
-import { TitleSorter } from './titleSorter'
+import { Sorter } from './sorter'
+import { compareTitles, compareAuthors } from './sorterHelpers'
 
 class LibraryView {
   constructor(app) {
     this.app = app
     this.library = app.library
-    this.titleSorter = new TitleSorter()
     this.titleAsc = document.getElementById('sort-title-asc')
     this.titleDesc = document.getElementById('sort-title-desc')
+    this.authorAsc = document.getElementById('sort-author-asc')
+    this.authorDesc = document.getElementById('sort-author-desc')
     this.tableBody = document.getElementById('table-body')
   }
 
@@ -22,6 +24,8 @@ class LibraryView {
   watch() {
     this._watchTitleAsc()
     this._watchTitleDesc()
+    this._watchAuthorAsc()
+    this._watchAuthorDesc()
   }
 
   // private
@@ -141,7 +145,7 @@ class LibraryView {
     this.titleAsc.addEventListener('click', (event) => {
       event.preventDefault()
 
-      const books = this.titleSorter.asc(this.app.library.books)
+      const books = Sorter.asc(this.app.library.books, compareTitles)
 
       this.app.libraryController.updateCollection(books)
     })
@@ -151,7 +155,27 @@ class LibraryView {
     this.titleDesc.addEventListener('click', (event) => {
       event.preventDefault()
 
-      const books = this.titleSorter.desc(this.app.library.books)
+      const books = Sorter.desc(this.app.library.books, compareTitles)
+
+      this.app.libraryController.updateCollection(books)
+    })
+  }
+
+  _watchAuthorAsc() {
+    this.authorAsc.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const books = Sorter.asc(this.app.library.books, compareAuthors)
+
+      this.app.libraryController.updateCollection(books)
+    })
+  }
+
+  _watchAuthorDesc() {
+    this.authorDesc.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const books = Sorter.desc(this.app.library.books, compareAuthors)
 
       this.app.libraryController.updateCollection(books)
     })
