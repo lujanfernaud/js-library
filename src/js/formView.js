@@ -1,6 +1,6 @@
 import { Book } from './book'
 
-class Form {
+class FormView {
   constructor(app) {
     this.app = app
     this.submitButton = document.getElementById('submit')
@@ -55,10 +55,10 @@ class Form {
 
     const book = new Book(title, author, url, status)
 
-    this.app.bookManager.add(book)
+    this.app.libraryController.add(book)
 
     this.app.modal.closeModal()
   }
 }
 
-export { Form }
+export { FormView }

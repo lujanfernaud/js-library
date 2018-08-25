@@ -1,21 +1,14 @@
-class BookManager {
-  static get GoodreadsURL() {
-    return /(https:\/\/www.goodreads.com\/book\/show\/\d{1,8}\.\w{2,35})/g
-  }
-
+class LibraryView {
   constructor(app) {
     this.app = app
+    this.books = app.library.books
   }
 
-  addCollection(books) {
-    books.forEach(book => this.add(book))
-  }
-
-  add(book) {
-    this.app.library.add(book)
-
-    this._createNewRow()
-    this._addInformationToRow(book)
+  render() {
+    this.books.forEach(book => {
+      this._createNewRow()
+      this._addInformationToRow(book)
+    })
   }
 
   // private
@@ -35,7 +28,7 @@ class BookManager {
   }
 
   _addTitleCell(book) {
-    if (book.url.match(BookManager.GoodreadsURL)) {
+    if (book.url) {
       this._addLinkCell(book)
     } else {
       this._addNormalCell(book.title)
@@ -127,4 +120,4 @@ class BookManager {
   }
 }
 
-export { BookManager }
+export { LibraryView }

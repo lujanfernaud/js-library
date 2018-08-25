@@ -1,4 +1,4 @@
-class Modal {
+class ModalView {
   constructor() {
     this.modal = document.getElementById('modal')
     this.backdrop = document.getElementById('modal-backdrop')
@@ -43,4 +43,4 @@ class Modal {
   }
 }
 
-export { Modal }
+export { ModalView }
