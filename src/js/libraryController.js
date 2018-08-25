@@ -12,6 +12,11 @@ class LibraryController {
     this.app.library.add(book)
     this.app.libraryView.render()
   }
+
+  updateCollection(books) {
+    this.app.library.books = books
+    this.app.libraryView.render()
+  }
 }
 
 export { LibraryController }

@@ -18,17 +18,24 @@ class App {
   }
 
   start() {
-    this.populateTable()
-    this.modalView.watch()
-    this.formView.watch()
+    this._populateTable()
+    this._watchViews()
   }
 
-  populateTable() {
+  // private
+
+  _populateTable() {
     if (localStorage.books && this.localStorage.booksNotEmpty()) {
       this.libraryController.addCollection(this.localStorage.books)
     } else {
       this.libraryController.addCollection(this.seeds.books.reverse())
     }
+  }
+
+  _watchViews() {
+    this.libraryView.watch()
+    this.modalView.watch()
+    this.formView.watch()
   }
 }
 

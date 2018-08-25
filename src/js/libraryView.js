@@ -1,20 +1,38 @@
+import { TitleSorter } from './titleSorter'
+
 class LibraryView {
   constructor(app) {
     this.app = app
-    this.books = app.library.books
+    this.library = app.library
+    this.titleSorter = new TitleSorter()
+    this.titleAsc = document.getElementById('sort-title-asc')
+    this.titleDesc = document.getElementById('sort-title-desc')
+    this.tableBody = document.getElementById('table-body')
   }
 
   render() {
-    this.books.forEach(book => {
+    this._clearTable()
+
+    this.app.library.books.forEach(book => {
       this._createNewRow()
       this._addInformationToRow(book)
     })
   }
 
+  watch() {
+    this._watchTitleAsc()
+    this._watchTitleDesc()
+  }
+
   // private
 
+  _clearTable() {
+    while (this.tableBody.lastChild) {
+      this.tableBody.removeChild(this.tableBody.lastChild)
+    }
+  }
+
   _createNewRow() {
-    this.tableBody = document.getElementById('table-body')
     this.tr = document.createElement('tr')
     this.tr.id = this.app.library.currentId
     this.tableBody.prepend(this.tr)
@@ -117,6 +135,26 @@ class LibraryView {
     tbody.removeChild(row)
 
     this.bookLibrary.remove(this.book)
+  }
+
+  _watchTitleAsc() {
+    this.titleAsc.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const books = this.titleSorter.asc(this.app.library.books)
+
+      this.app.libraryController.updateCollection(books)
+    })
+  }
+
+  _watchTitleDesc() {
+    this.titleDesc.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const books = this.titleSorter.desc(this.app.library.books)
+
+      this.app.libraryController.updateCollection(books)
+    })
   }
 }
 
