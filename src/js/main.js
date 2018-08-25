@@ -17,8 +17,8 @@ class App {
 
   start() {
     this.populateTable()
-    this.modal.watchButtons()
-    this.form.watchSubmitButton()
+    this.modal.watch()
+    this.form.watch()
   }
 
   populateTable() {

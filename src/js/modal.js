@@ -7,7 +7,7 @@ class Modal {
     this.titleInput = document.getElementById('form-input-title')
   }
 
-  watchButtons() {
+  watch() {
     this._watchOpenButtons()
     this._watchCloseButton()
     this._watchBackdrop()

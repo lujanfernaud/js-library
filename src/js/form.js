@@ -3,20 +3,44 @@ import { Book } from './book'
 class Form {
   constructor(app) {
     this.app = app
-    this.titleInput = document.getElementById('form-input-title')
-    this.authorInput = document.getElementById('form-input-author')
     this.submitButton = document.getElementById('submit')
   }
 
-  watchSubmitButton() {
-    this.submitButton.addEventListener('click', (event) => {
-      event.preventDefault()
-
-      this._submitBook()
-    })
+  watch() {
+    this._watchFields()
+    this._watchSubmitButton()
   }
 
   // private
+
+  _watchFields() {
+    this.titleInput = document.getElementById('form-input-title')
+    this.authorInput = document.getElementById('form-input-author')
+
+    const fields = [this.titleInput, this.authorInput]
+
+    fields.forEach(field => {
+      field.addEventListener('input', () => {
+        return this._changeFieldState(field)
+      })
+    })
+  }
+
+  _changeFieldState(field) {
+    if (!field.validity.valid) {
+      field.classList.remove('is-primary')
+      field.classList.add('is-danger')
+    } else {
+      field.classList.remove('is-danger')
+      field.classList.add('is-primary')
+    }
+  }
+
+  _watchSubmitButton() {
+    this.submitButton.addEventListener('click', () => {
+      this._submitBook()
+    })
+  }
 
   _submitBook() {
     if (!this.titleInput.validity.valid || !this.authorInput.validity.valid) {
