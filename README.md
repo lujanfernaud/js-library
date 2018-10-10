@@ -2,6 +2,10 @@
 
 A simple reading list built with ES6, [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage), and [Bulma](https://bulma.io/).
 
+## Demo
+
+[lujanfernaud.com/js-reading-list](http://lujanfernaud.com/js-reading-list/)
+
 ## Screenshot
 
 <kbd>
